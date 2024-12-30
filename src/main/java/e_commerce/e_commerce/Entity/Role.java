@@ -3,6 +3,8 @@ package e_commerce.e_commerce.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +28,8 @@ public class Role {
     private Long roleId;
 
     @Column
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
 
     @ManyToMany(mappedBy = "userRoleRoles")
     private Set<User> userRoleUsers;
@@ -47,11 +50,11 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getRoleName() {
+    public RoleName getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(final String roleName) {
+    public void setRoleName(final RoleName roleName) {
         this.roleName = roleName;
     }
 

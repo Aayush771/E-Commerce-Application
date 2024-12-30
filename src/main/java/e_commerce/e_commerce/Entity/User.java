@@ -12,11 +12,15 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+
 import java.time.OffsetDateTime;
 import java.util.Set;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -30,6 +34,7 @@ public class User {
     private Long userId;
 
     @Column(length = 50, unique = true)
+    @Email
     private String email;
 
     @Column(length = 20)
@@ -43,7 +48,7 @@ public class User {
 
     @Column
     private String password;
-    
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "UserRoles",
@@ -51,7 +56,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> userRoleRoles;
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "UserAddresses",
