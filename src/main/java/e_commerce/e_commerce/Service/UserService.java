@@ -37,6 +37,7 @@ public class UserService implements IUserService {
     roles.add(defaultRole);
 
     user.setUserRoleRoles(roles); // Assign default role to user
+    user.setUserCarts(new HashSet<>());
 
     // Save the user
     userRepository.save(user);

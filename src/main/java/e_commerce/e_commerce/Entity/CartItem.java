@@ -34,12 +34,14 @@ public class CartItem {
 
     @Column
     private Integer quantity;
+    @Column
+    private Double itemTotalPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -114,5 +116,15 @@ public class CartItem {
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
+    public Double getItemTotalPrice() {
+        return itemTotalPrice;
+    }
+
+    public void setItemTotalPrice(Double itemTotalPrice) {
+        this.itemTotalPrice = itemTotalPrice;
+    }
+
+    
 
 }

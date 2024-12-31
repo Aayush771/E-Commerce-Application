@@ -21,6 +21,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -45,7 +46,7 @@ public class User {
 
     @Column(length = 10)
     private String mobileNumber;
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column
     private String password;
     @JsonIgnore
@@ -64,8 +65,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "addressId")
     )
     private Set<Address> userAddressAddresses;
-
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Cart> userCarts;
 
     @CreatedDate
