@@ -32,7 +32,7 @@ public class CartItemService implements ICartItemService {
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
-        cartItem.setProductPrice(product.getPrice());
+        cartItem.setProductPrice(product.getSpecialPrice());
         cartItem.setDiscount(product.getDiscount());
         cartItem.setItemTotalPrice(product.getSpecialPrice() * quantity);
 
@@ -48,11 +48,12 @@ public class CartItemService implements ICartItemService {
     }
 
     @Override
-    public void updateCartItemQuantity(Long cartItemId, int quantity) {
+    public CartItem updateCartItemQuantity(Long cartItemId, int quantity) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                             .orElseThrow(() -> new RuntimeException("Cart Item not found"));
         cartItem.setQuantity(quantity);
-        cartItemRepository.save(cartItem);
+        cartItem.setItemTotalPrice(cartItem.getProductPrice() * quantity);
+       return cartItemRepository.save(cartItem);
     }
 
    

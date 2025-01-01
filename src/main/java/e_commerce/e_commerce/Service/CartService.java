@@ -70,14 +70,29 @@ public class CartService implements ICartService {
     // }
 
     @Override
-    public Cart removeItemFromCart(Long userId, Long cartItemId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeItemFromCart'");
+    public Cart removeItemFromCart(Long cartId, Long cartItemId) {
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);      
+        Cart cart = cartOptional.orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+        Set<CartItem> cartItems = cart.getCartCartItems();
+        cartItems.removeIf(cartItem -> cartItem.getCartItemId().equals(cartItemId));
+        cart.setCartCartItems(cartItems);
+        cart.setTotalPrice(cartItems.stream().mapToDouble(cartItem -> cartItem.getItemTotalPrice()).sum());
+        Cart updatedCart = cartRepository.save(cart);
+        cartItemService.removeCartItem(cartItemId);
+        return updatedCart;
     }
 
     @Override
-    public Cart updateCartItemQuantity(Long userId, Long cartItemId, int quantity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateCartItemQuantity'");
+    public Cart updateCartItemQuantity(Long cartId, Long cartItemId, int quantity) {
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);      
+        Cart cart = cartOptional.orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+      CartItem cartItem = cartItemService.updateCartItemQuantity(cartItemId, quantity);
+      Set<CartItem> cartItems = cart.getCartCartItems();
+      cartItems.removeIf(item -> item.getCartItemId().equals(cartItemId));
+      cartItems.add(cartItem);
+      cart.setCartCartItems(cartItems);
+      cart.setTotalPrice(cartItems.stream().mapToDouble(Item -> Item.getItemTotalPrice()).sum());
+      Cart updatedCart = cartRepository.save(cart);
+      return updatedCart;
     }
 }
