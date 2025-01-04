@@ -84,5 +84,23 @@ public class SellerService implements ISellerService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllSellers'");
     }
+
+    // @Override
+    // public String deleteSeller(Long sellerId) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'deleteSeller'");
+    // }
+
+    // @Override
+    // public Seller getSeller(Long sellerId) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'getSeller'");
+    // }
+
+    // @Override
+    // public List<Seller> getAllSellers() {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'getAllSellers'");
+    // }
     
 }
