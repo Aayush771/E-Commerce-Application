@@ -46,26 +46,7 @@ public class SellerService implements ISellerService {
     
     }
 
-    // @Override
-    // public String updateSeller(Seller seller) {
-    //     // TODO Auto-generated method stub
-    //  Seller updatedSeller =   sellerRepository.findById(seller.getSellerId()).orElseThrow(()-> new RuntimeException("Seller not found"));
-    //  if(seller.getContactEmail() != null){
-    //      updatedSeller.setContactEmail(seller.getContactEmail());
-    //  }
-    //  if(seller.getContactPhone() != null){     
-    //      updatedSeller.setContactPhone(seller.getContactPhone());
-    //  }
-    //  if(seller.getStoreName() != null){
-    //      updatedSeller.setStoreName(seller.getStoreName());
-    //  }
-    //  if(seller.getStoreDescription() != null){
-    //      updatedSeller.setStoreDescription(seller.getStoreDescription());
-    //  }
-    //  sellerRepository.save(updatedSeller);
-    //  return "Success "+ updatedSeller.getSellerId();
     
-    // }
 
     @Override
     public String deleteSeller(Long sellerId) {
@@ -85,22 +66,6 @@ public class SellerService implements ISellerService {
         throw new UnsupportedOperationException("Unimplemented method 'getAllSellers'");
     }
 
-    // @Override
-    // public String deleteSeller(Long sellerId) {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'deleteSeller'");
-    // }
-
-    // @Override
-    // public Seller getSeller(Long sellerId) {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'getSeller'");
-    // }
-
-    // @Override
-    // public List<Seller> getAllSellers() {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'getAllSellers'");
-    // }
+   
     
 }
