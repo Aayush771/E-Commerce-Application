@@ -64,7 +64,7 @@ public class User {
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "addressId")
     )
-    private Set<Address> userAddressAddresses;
+    private Set<Address> userAddresses;
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Cart> userCarts;
@@ -133,13 +133,7 @@ public class User {
         this.userRoleRoles = userRoleRoles;
     }
 
-    public Set<Address> getUserAddressAddresses() {
-        return userAddressAddresses;
-    }
-
-    public void setUserAddressAddresses(final Set<Address> userAddressAddresses) {
-        this.userAddressAddresses = userAddressAddresses;
-    }
+  
 
     public Set<Cart> getUserCarts() {
         return userCarts;
@@ -163,6 +157,14 @@ public class User {
 
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Set<Address> getUserAddresses() {
+        return userAddresses;
+    }
+
+    public void setUserAddresses(Set<Address> userAddresses) {
+        this.userAddresses = userAddresses;
     }
 
 }

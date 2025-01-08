@@ -1,5 +1,6 @@
 package e_commerce.e_commerce.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,31 +80,33 @@ public class UserService implements IUserService {
     @Override
     public String deleteUser(Long userId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+      userRepository.deleteById(userId);
+      return "User deleted successfully";
     }
 
     @Override
     public User getUser(Long userId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUser'");
+      return userRepository.findById(userId).get();
+      
     }
 
     @Override
     public User getUser(String email) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUser'");
+       return userRepository.findByEmail(email);
     }
 
     @Override
     public List<User> getAllUsers() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUsers'");
+      return userRepository.findAll();
     }
 
     @Override
     public List<Address> getUserAddress(Long userId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserAddress'");
+        return new ArrayList<Address>(userRepository.findById(userId).get().getUserAddresses());
     }
     
 }
