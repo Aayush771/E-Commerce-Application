@@ -49,7 +49,31 @@ public class UserService implements IUserService {
     @Override
     public String updateUser(User user) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+        User user2 = userRepository.findById(user.getUserId()).orElseThrow(()-> new RuntimeException("User not found"));
+
+       if(user.getFirstName() != null) {
+           user2.setFirstName(user.getFirstName()); 
+       }
+
+       if(user.getLastName() != null) { 
+           user2.setLastName(user.getLastName());
+       }        
+
+       if(user.getEmail() != null) {
+           user2.setEmail(user.getEmail());                  
+       }
+
+       if(user.getPassword() != null) {
+           user2.setPassword(user.getPassword());          
+       }
+
+       if(user.getMobileNumber() != null) {
+           user2.setMobileNumber(user.getMobileNumber());
+       }
+
+       userRepository.save(user2);
+       return "User updated successfully";
+
     }
 
     @Override
