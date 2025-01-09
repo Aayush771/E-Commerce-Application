@@ -8,7 +8,7 @@ public class SellerDashbord {
     
     private Long totalOrders;
     private Long totalProducts;
-    private Long totalUsers;    
+    private Long totalUsers;   
     private Long totalRevenue;
     @JsonIgnore
     @OneToOne
