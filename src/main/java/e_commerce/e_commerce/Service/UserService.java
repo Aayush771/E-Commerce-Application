@@ -108,5 +108,17 @@ public class UserService implements IUserService {
         // TODO Auto-generated method stub
         return new ArrayList<Address>(userRepository.findById(userId).get().getUserAddresses());
     }
+
+    // @Override
+    // public List<User> getAllUsers() {
+    //     // TODO Auto-generated method stub
+    //   return userRepository.findAll();
+    // }
+
+    // @Override
+    // public List<Address> getUserAddress(Long userId) {
+    //     // TODO Auto-generated method stub
+    //     return new ArrayList<Address>(userRepository.findById(userId).get().getUserAddresses());
+    // }
     
 }
