@@ -50,8 +50,9 @@ public class SellerService implements ISellerService {
 
     @Override
     public String deleteSeller(Long sellerId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteSeller'");
+      Seller seller = sellerRepository.findById(sellerId).orElseThrow(()-> new RuntimeException("Seller not found"));
+      sellerRepository.delete(seller);
+      return "Seller deleted successfully";
     }
 
     @Override
