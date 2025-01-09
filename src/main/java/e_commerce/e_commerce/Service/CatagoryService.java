@@ -22,14 +22,21 @@ public class CatagoryService implements ICatagoryService{
 
     @Override
     public String updateCatagory(Category category) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateCatagory'");
+       Category catagory = catagoryRepository.findById(category.getCategoryId()).orElseThrow(()-> new RuntimeException("Catagory not found"));
+       if(category.getCategoryName() != null) {
+           catagory.setCategoryName(category.getCategoryName());
+           catagoryRepository.save(catagory);
+           return "Catagory updated successfully";
+       }
+       return "Catagory not updated";
     }
 
     @Override
     public String deleteCatagory(Long categoryId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCatagory'");
+        catagoryRepository.findById(categoryId).orElseThrow(()-> new RuntimeException("Catagory not found"));
+        catagoryRepository.deleteById(categoryId);
+        return "Catagory deleted successfully"; 
     }
 
     @Override

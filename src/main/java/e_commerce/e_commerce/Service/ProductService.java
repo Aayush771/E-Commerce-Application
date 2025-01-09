@@ -22,20 +22,43 @@ public  class ProductService implements IProductService {
 
     @Override
     public String updateProduct(Product product) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+       Product product2 = productRepository.findById(product.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
+       if(product.getProductName() != null) {   
+           product2.setProductName(product.getProductName());
+    }
+       if(product.getDescription() != null) {
+           product2.setDescription(product.getDescription());
+       }
+       if(product.getImage() != null) {
+           product2.setImage(product.getImage());
+       }
+       if(product.getPrice() != null) {
+           product2.setPrice(product.getPrice());
+       }
+       if(product.getSpecialPrice() != null) {
+           product2.setSpecialPrice(product.getSpecialPrice());
+       }
+       if(product.getQuantity() != null) {
+           product2.setQuantity(product.getQuantity());
+       }
+       if(product.getDiscount() != null) {
+           product2.setDiscount(product.getDiscount());
+       }
+       productRepository.save(product2);
+       return "Product updated successfully";
     }
 
     @Override
     public String deleteProduct(Long productId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteProduct'");
+      Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+      productRepository.delete(product);
+      return "Product deleted successfully";
     }
 
     @Override
     public Product getProduct(Long productId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProduct'");
+        return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     @Override
@@ -46,7 +69,7 @@ public  class ProductService implements IProductService {
     @Override
     public Seller getSeller(Long sellerId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSeller'");
+     return productRepository.findBySellerId(sellerId);
     }
     
 }
