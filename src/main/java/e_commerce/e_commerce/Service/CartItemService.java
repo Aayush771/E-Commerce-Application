@@ -1,5 +1,8 @@
 package e_commerce.e_commerce.Service;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +23,7 @@ public class CartItemService implements ICartItemService {
     private ProductRepository productRepository;
 
     @Override
-    public Cart addCartItem(Cart cart, Long productId, int quantity) {
+    public CartItem addCartItem(Cart cart, Long productId, int quantity) {
         Product product = productRepository.findById(productId)
                           .orElseThrow(() -> new RuntimeException("Product not found"));
 
@@ -37,9 +40,8 @@ public class CartItemService implements ICartItemService {
         cartItem.setItemTotalPrice(product.getSpecialPrice() * quantity);
 
         CartItem savedCartItem = cartItemRepository.save(cartItem);
-        cart.getCartCartItems().add(savedCartItem);
 
-        return cart;
+        return savedCartItem;      
     }
 
     @Override

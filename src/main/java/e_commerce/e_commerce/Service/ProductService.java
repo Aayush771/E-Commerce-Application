@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import e_commerce.e_commerce.Entity.Product;
-import e_commerce.e_commerce.Entity.Seller;
 import e_commerce.e_commerce.Repository.ProductRepository;
 @Service
 public  class ProductService implements IProductService {

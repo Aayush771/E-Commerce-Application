@@ -31,12 +31,12 @@ public class Order {
 
     @Column
     private String email;
-
+    
     @Column
     private LocalDate orderDate;
 
     @Column
-    private String orderStatus;
+    private  OrderStatus orderStatus = OrderStatus.PENDING;
 
     @Column
     private Double totalAmount;
@@ -83,14 +83,7 @@ public class Order {
     public void setOrderDate(final LocalDate orderDate) {
         this.orderDate = orderDate;
     }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(final String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+ 
 
     public Double getTotalAmount() {
         return totalAmount;
@@ -138,6 +131,37 @@ public class Order {
 
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public enum OrderStatus {
+        PENDING, PLACED, FAILED
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Order(Long orderId, String email, LocalDate orderDate, OrderStatus orderStatus, Double totalAmount,
+            Set<OrderItem> orderOrderItems, Payment payment, Seller seller, OffsetDateTime dateCreated,
+            OffsetDateTime lastUpdated) {
+        this.orderId = orderId;
+        this.email = email;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.totalAmount = totalAmount;
+        this.orderOrderItems = orderOrderItems;
+        this.payment = payment;
+        this.seller = seller;
+        this.dateCreated = dateCreated;
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Order() {
+
     }
 
 }

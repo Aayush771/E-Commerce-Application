@@ -48,10 +48,11 @@ public class CartService implements ICartService {
         Optional<Cart> cartOptional = cartRepository.findById(cartId);
         
         Cart cart = cartOptional.orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
-       Cart updatedCart =  cartItemService.addCartItem(cart, productId, quantity);
-        Set<CartItem> cartItems = updatedCart.getCartCartItems();
-      Double cartTotalPrice = cartItems.stream().mapToDouble(cartItem -> cartItem.getItemTotalPrice()).sum();
-        cart.setTotalPrice(cartTotalPrice);
+       CartItem newCartItem =  cartItemService.addCartItem(cart, productId, quantity);
+       Set<CartItem> cartItems = cart.getCartCartItems();
+       cartItems.add(newCartItem);
+        cart.setCartCartItems(cartItems);
+        cart.setTotalPrice(calculateTotalAmount(cartItems));
         return cartRepository.save(cart);
     }
 
@@ -94,5 +95,15 @@ public class CartService implements ICartService {
       cart.setTotalPrice(cartItems.stream().mapToDouble(Item -> Item.getItemTotalPrice()).sum());
       Cart updatedCart = cartRepository.save(cart);
       return updatedCart;
+    }
+
+    @Override
+    public Optional<Cart> getCart(Long cartId) {
+        // TODO Auto-generated method stub
+       return cartRepository.findById(cartId);
+    }
+    @Override
+    public Double calculateTotalAmount(Set<CartItem> cartItems) {
+        return cartItems.stream().mapToDouble(cartItem -> cartItem.getItemTotalPrice()).sum();
     }
 }

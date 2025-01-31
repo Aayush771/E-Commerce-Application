@@ -35,6 +35,9 @@ public class OrderItem {
     @Column
     private Integer quantity;
 
+    @Column
+    private Double itemTotalPrice;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
@@ -46,11 +49,11 @@ public class OrderItem {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;
-
+     
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
-
+    
     public Long getOrderItemId() {
         return orderItemId;
     }
@@ -113,6 +116,14 @@ public class OrderItem {
 
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Double getItemTotalPrice() {
+        return itemTotalPrice;
+    }
+
+    public void setItemTotalPrice(Double itemTotalPrice) {
+        this.itemTotalPrice = itemTotalPrice;
     }
 
 }
