@@ -4,7 +4,7 @@
 This project is a database schema for an E-Commerce platform that includes users, products, orders, payments, and other essential entities required for online shopping. The schema is designed to handle user accounts, shopping carts, product categories, sellers, and order processing.
 
 ## ER Diagram
-![E-Commerce ER Diagram](src\main\resources\E-Commerce-Diagram.png)
+![E-Commerce ER Diagram](src/main/resources/E-Commerce-Diagram.png)
 
 
 ## Database Schema
