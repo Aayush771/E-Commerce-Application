@@ -1,40 +1,80 @@
-# ECommerce Application
+# E-Commerce Project
+
+## Overview
+This project is a database schema for an E-Commerce platform that includes users, products, orders, payments, and other essential entities required for online shopping. The schema is designed to handle user accounts, shopping carts, product categories, sellers, and order processing.
+
+## ER Diagram
+![E-Commerce ER Diagram](src\main\resources\E-Commerce-Diagram.png)
 
 
-## Development
+## Database Schema
 
-When starting the application `docker compose up` is called and the app will connect to the contained services.
-[Docker](https://www.docker.com/get-started/) must be available on the current system.
+The database schema consists of the following tables:
 
-During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
-added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
-`application-local.properties` file to override settings for development.
+### 1. **Users (`users`)**
+- Stores user details such as name, email, and contact information.
+- Related to `user_addresses` for managing multiple addresses.
 
-After starting the application it is accessible under `localhost:8080`.
+### 2. **Addresses (`addresses`)**
+- Stores address details such as street, city, and country.
+- Connected to `user_addresses` for mapping users to addresses.
 
-## Build
+### 3. **User Roles (`user_roles` and `roles`)**
+- Implements role-based access control.
+- Stores different roles such as `admin`, `customer`, and `seller`.
 
-The application can be built using the following command:
+### 4. **Products (`products`)**
+- Stores product information including name, price, description, and images.
+- Related to `categories` and `sellers`.
 
-```
-gradlew clean build
-```
+### 5. **Categories (`categories`)**
+- Organizes products into different categories.
 
-Start your application with the following command - here with the profile `production`:
+### 6. **Sellers (`sellers`)**
+- Stores seller information such as store name and contact details.
+- Linked with `products` to associate sellers with their products.
 
-```
-java -Dspring.profiles.active=production -jar ./build/libs/E-Commerce-0.0.1-SNAPSHOT.jar
-```
+### 7. **Shopping Cart (`carts` and `cart_items`)**
+- Allows users to add products to their cart before checkout.
 
-If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
-environment variable when running the container.
+### 8. **Orders (`orders` and `order_items`)**
+- Manages order details and tracks purchased items.
+- Related to `payments` for transaction processing.
 
-```
-gradlew bootBuildImage --imageName=e-commerce/e-commerce
-```
+### 9. **Payments (`payments`)**
+- Stores payment details, including payment method and status.
 
-## Further readings
+## Features
+- User authentication and role-based access control.
+- Product listing and categorization.
+- Shopping cart functionality.
+- Order and payment processing.
+- Seller management and product association.
 
-* [Gradle user manual](https://docs.gradle.org/)  
-* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
-* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
+## Setup Instructions
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd e-commerce-project
+   ```
+2. Import the database schema into MySQL:
+   ```sh
+   mysql -u root -p < database_schema.sql
+   ```
+3. Configure the database connection in your application.
+4. Run the application and start using the platform.
+
+## Future Enhancements
+- Implement RESTful APIs for frontend integration.
+- Add discount and coupon management.
+- Improve reporting and analytics for orders and sales.
+- Optimize performance with indexing and caching.
+
+## Contribution
+Feel free to contribute by submitting issues and pull requests to enhance the system.
+
+---
+**Author:** Ayush Kumar  
+**License:** MIT  
+**Version:** 1.0.0
+

@@ -66,10 +66,10 @@ public  class ProductService implements IProductService {
        return productRepository.findAll();
     }
 
-    @Override
-    public Seller getSeller(Long sellerId) {
+     @Override
+    public List<Product> getProductsBySellerId(Long sellerId) {
         // TODO Auto-generated method stub
-     return productRepository.findBySellerId(sellerId);
+     return productRepository. findBySeller_SellerId(sellerId);
     }
     
 }

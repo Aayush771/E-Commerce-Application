@@ -3,7 +3,6 @@ package e_commerce.e_commerce.Service;
 import java.util.List;
 
 import e_commerce.e_commerce.Entity.Product;
-import e_commerce.e_commerce.Entity.Seller;
 
 public interface IProductService {
    String addProduct(final Product product);
@@ -11,5 +10,5 @@ public interface IProductService {
     String deleteProduct(final Long productId);
     Product getProduct(final Long productId);  
     List<Product> getAllProducts();
-    Seller getSeller(final Long sellerId);
+    List<Product> getProductsBySellerId(final Long sellerId);
 }

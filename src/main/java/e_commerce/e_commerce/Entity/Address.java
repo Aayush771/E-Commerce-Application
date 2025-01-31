@@ -43,7 +43,7 @@ public class Address {
     @Column
     private String street;
 
-    @ManyToMany(mappedBy = "userAddressAddresses")
+    @ManyToMany(mappedBy = "userAddresses")
     private Set<User> userAddressUsers;
 
     @CreatedDate
