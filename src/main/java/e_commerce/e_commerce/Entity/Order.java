@@ -1,5 +1,6 @@
 package e_commerce.e_commerce.Entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -17,6 +18,8 @@ import java.util.Set;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -41,16 +44,12 @@ public class Order {
     @Column
     private Double totalAmount;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderItem> orderOrderItems;
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> orderOrderItems;  
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_id")
     private Payment payment;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id")
-    private Seller seller;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -109,13 +108,6 @@ public class Order {
         this.payment = payment;
     }
 
-    public Seller getSeller() {
-        return seller;
-    }
-
-    public void setSeller(final Seller seller) {
-        this.seller = seller;
-    }
 
     public OffsetDateTime getDateCreated() {
         return dateCreated;
@@ -155,7 +147,6 @@ public class Order {
         this.totalAmount = totalAmount;
         this.orderOrderItems = orderOrderItems;
         this.payment = payment;
-        this.seller = seller;
         this.dateCreated = dateCreated;
         this.lastUpdated = lastUpdated;
     }

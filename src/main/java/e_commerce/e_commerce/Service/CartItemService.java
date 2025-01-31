@@ -35,9 +35,9 @@ public class CartItemService implements ICartItemService {
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
-        cartItem.setProductPrice(product.getSpecialPrice());
+        cartItem.setProductPrice(getSpecialPrice(product.getPrice(),product.getDiscount()));
         cartItem.setDiscount(product.getDiscount());
-        cartItem.setItemTotalPrice(product.getSpecialPrice() * quantity);
+        cartItem.setItemTotalPrice(cartItem.getProductPrice() * quantity);
 
         CartItem savedCartItem = cartItemRepository.save(cartItem);
 
@@ -59,7 +59,9 @@ public class CartItemService implements ICartItemService {
     }
 
    
-
+    public Double getSpecialPrice(Double price, Double discount) {
+        return price - (price * discount / 100);
+    }
    
   
 }

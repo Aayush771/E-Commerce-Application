@@ -45,7 +45,7 @@ public class Seller {
     private Set<Product> sellerProducts;
      @JsonIgnore
     @OneToMany(mappedBy = "seller")
-    private Set<Order> sellerOrders;
+    private Set<OrderItem> sellerOrders;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -103,14 +103,7 @@ public class Seller {
         this.sellerProducts = sellerProducts;
     }
 
-    public Set<Order> getSellerOrders() {
-        return sellerOrders;
-    }
-
-    public void setSellerOrders(final Set<Order> sellerOrders) {
-        this.sellerOrders = sellerOrders;
-    }
-
+   
     public OffsetDateTime getDateCreated() {
         return dateCreated;
     }
@@ -125,6 +118,14 @@ public class Seller {
 
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Set<OrderItem> getSellerOrders() {
+        return sellerOrders;
+    }
+
+    public void setSellerOrders(Set<OrderItem> sellerOrders) {
+        this.sellerOrders = sellerOrders;
     }
 
 }

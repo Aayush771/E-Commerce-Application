@@ -34,9 +34,7 @@ public  class ProductService implements IProductService {
        if(product.getPrice() != null) {
            product2.setPrice(product.getPrice());
        }
-       if(product.getSpecialPrice() != null) {
-           product2.setSpecialPrice(product.getSpecialPrice());
-       }
+      
        if(product.getQuantity() != null) {
            product2.setQuantity(product.getQuantity());
        }

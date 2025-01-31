@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import e_commerce.e_commerce.Entity.Order;
 import e_commerce.e_commerce.Service.IOrderService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 

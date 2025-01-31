@@ -48,8 +48,6 @@ public class Product {
     @Column
     private Integer quantity;
 
-    @Column
-    private Double specialPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
@@ -129,13 +127,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Double getSpecialPrice() {
-        return specialPrice;
-    }
-
-    public void setSpecialPrice(final Double specialPrice) {
-        this.specialPrice = specialPrice;
-    }
 
     public Category getCategory() {
         return category;
