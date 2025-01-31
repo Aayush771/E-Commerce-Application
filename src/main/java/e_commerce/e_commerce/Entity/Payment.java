@@ -1,35 +1,40 @@
 package e_commerce.e_commerce.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
-import java.util.Set;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "Payments")
+@Table(name = "payments")
 @EntityListeners(AuditingEntityListener.class)
 public class Payment {
 
     @Id
-    @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
     private Long paymentId;
 
-    @Column
-    private String paymentMethod;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
-    @OneToMany(mappedBy = "payment")
-    private Set<Order> paymentOrders;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal amount;
+
+    @Column(unique = true)
+    private String transactionId;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -39,44 +44,43 @@ public class Payment {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
-    public Long getPaymentId() {
-        return paymentId;
-    }
+    // Constructors
+    public Payment() {}
 
-    public void setPaymentId(final Long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(final String paymentMethod) {
+    public Payment(Order order, PaymentMethod paymentMethod, BigDecimal amount, String transactionId) {
+        this.order = order;
         this.paymentMethod = paymentMethod;
+        this.amount = amount;
+        this.transactionId = transactionId;
     }
 
-    public Set<Order> getPaymentOrders() {
-        return paymentOrders;
+    // Getters & Setters
+    public Long getPaymentId() { return paymentId; }
+
+    public Order getOrder() { return order; }
+    public void setOrder(Order order) { this.order = order; }
+
+    public PaymentMethod getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(PaymentMethod paymentMethod) { this.paymentMethod = paymentMethod; }
+
+    public PaymentStatus getPaymentStatus() { return paymentStatus; }
+    public void setPaymentStatus(PaymentStatus paymentStatus) { this.paymentStatus = paymentStatus; }
+
+    public BigDecimal getAmount() { return amount; }
+    public void setAmount(BigDecimal amount) { this.amount = amount; }
+
+    public String getTransactionId() { return transactionId; }
+    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
+
+    public OffsetDateTime getDateCreated() { return dateCreated; }
+    public OffsetDateTime getLastUpdated() { return lastUpdated; }
+
+    // Enums for Payment Method & Status
+    public enum PaymentMethod {
+        CREDIT_CARD, DEBIT_CARD, PAYPAL, UPI, NET_BANKING, CASH_ON_DELIVERY
     }
 
-    public void setPaymentOrders(final Set<Order> paymentOrders) {
-        this.paymentOrders = paymentOrders;
+    public enum PaymentStatus {
+        PENDING, COMPLETED, FAILED, REFUNDED
     }
-
-    public OffsetDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(final OffsetDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public OffsetDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(final OffsetDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
 }
