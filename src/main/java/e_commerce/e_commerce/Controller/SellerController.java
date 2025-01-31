@@ -27,7 +27,7 @@ public class SellerController {
         return sellerService.addSeller(entity);
     }
     @GetMapping("/all")
-    public List<Seller> getAllSellers(@RequestParam String param) {
+    public List<Seller> getAllSellers() {
         return sellerService.getAllSellers();
     }
     

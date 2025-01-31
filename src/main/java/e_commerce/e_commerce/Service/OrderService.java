@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import e_commerce.e_commerce.Entity.Cart;
 import e_commerce.e_commerce.Entity.Order;
 import e_commerce.e_commerce.Entity.OrderItem;
+import e_commerce.e_commerce.Entity.Product;
 import e_commerce.e_commerce.Entity.User;
 import e_commerce.e_commerce.Repository.OrderRepository;
 @Service
@@ -36,7 +37,11 @@ public class OrderService implements IOrderService {
             orderItem.setItemTotalPrice(cartItem.getItemTotalPrice());
             orderItem.setOrderedProductPrice(cartItem.getProductPrice());
             orderItem.setQuantity(cartItem.getQuantity());
+            Product product = cartItem.getProduct();
             orderItem.setProduct(cartItem.getProduct());
+            if (product.getSeller() == null) {
+                throw new RuntimeException("Seller not found for product: " + product.getProductId());
+            }
             orderItem.setSeller(cartItem.getProduct().getSeller());
             return orderItem;
         }).collect(Collectors.toSet());

@@ -64,7 +64,7 @@ public class SellerService implements ISellerService {
     @Override
     public List<Seller> getAllSellers() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllSellers'");
+        return sellerRepository.findAll();
     }
 
    

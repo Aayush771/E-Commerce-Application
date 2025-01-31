@@ -43,11 +43,11 @@ public class Order {
 
     @Column
     private Double totalAmount;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderItem> orderOrderItems;  
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
@@ -125,9 +125,7 @@ public class Order {
         this.lastUpdated = lastUpdated;
     }
 
-    public enum OrderStatus {
-        PENDING, PLACED, FAILED
-    }
+ 
 
     public OrderStatus getOrderStatus() {
         return orderStatus;
