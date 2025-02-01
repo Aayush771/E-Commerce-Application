@@ -22,9 +22,8 @@ public class OrderService implements IOrderService {
     @Override
     public Order createOrder(Long cartId) {
       
-        Cart cart = cartService.getCart(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
-    
+        Cart cart = cartService.getCart(cartId).orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+                
         User user = cart.getUser();
         Order order = new Order();
        
@@ -38,10 +37,10 @@ public class OrderService implements IOrderService {
             orderItem.setOrderedProductPrice(cartItem.getProductPrice());
             orderItem.setQuantity(cartItem.getQuantity());
             Product product = cartItem.getProduct();
-            orderItem.setProduct(cartItem.getProduct());
             if (product.getSeller() == null) {
                 throw new RuntimeException("Seller not found for product: " + product.getProductId());
             }
+            orderItem.setProduct(cartItem.getProduct());
             orderItem.setSeller(cartItem.getProduct().getSeller());
             return orderItem;
         }).collect(Collectors.toSet());
@@ -50,15 +49,15 @@ public class OrderService implements IOrderService {
         order.setOrderOrderItems(orderItems);
         order.setEmail(user.getEmail());
         order.setOrderDate(java.time.LocalDate.now());
-        order.setTotalAmount(reCalculateTotalAmount(order.getOrderOrderItems()));
+        Double totalAmount = reCalculateTotalAmount(order.getOrderOrderItems());
+        order.setTotalAmount(totalAmount);
         // Save the Order
         return orderRepository.save(order);
     }
 
     @Override
     public Double reCalculateTotalAmount(Set<OrderItem> orderItems) {
-        // TODO Auto-generated method stub
-        return orderItems.stream().mapToDouble(orderItem -> orderItem.getItemTotalPrice()).sum();
+        return orderItems.stream().mapToDouble(OrderItem::getItemTotalPrice).sum();
     }
     
     

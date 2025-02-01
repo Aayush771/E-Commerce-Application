@@ -27,7 +27,7 @@ public class CartItemService implements ICartItemService {
         Product product = productRepository.findById(productId)
                           .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        if (product.getQuantity() < quantity) {
+        if (product.getStocks() < quantity) {
             throw new RuntimeException("Not enough stock available");
         }
 

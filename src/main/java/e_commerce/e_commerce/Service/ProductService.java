@@ -22,8 +22,8 @@ public  class ProductService implements IProductService {
     @Override
     public String updateProduct(Product product) {
        Product product2 = productRepository.findById(product.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
-       if(product.getProductName() != null) {   
-           product2.setProductName(product.getProductName());
+       if(product.getTitle() != null) {   
+           product2.setTitle(product.getTitle());
     }
        if(product.getDescription() != null) {
            product2.setDescription(product.getDescription());
@@ -35,8 +35,8 @@ public  class ProductService implements IProductService {
            product2.setPrice(product.getPrice());
        }
       
-       if(product.getQuantity() != null) {
-           product2.setQuantity(product.getQuantity());
+       if(product.getStocks() != null) {
+           product2.setStocks(product.getStocks());
        }
        if(product.getDiscount() != null) {
            product2.setDiscount(product.getDiscount());

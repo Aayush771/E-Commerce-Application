@@ -1,6 +1,7 @@
 package e_commerce.e_commerce.Entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
@@ -29,8 +30,9 @@ public class Product {
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-
-    @Column(name = "\"description\"")
+    @Column
+    private String title;
+    @Column(name = "description")
     private String description;
 
     @Column
@@ -43,12 +45,11 @@ public class Product {
     private Double price;
 
     @Column
-    private String productName;
-
+    private Integer stocks;
     @Column
-    private Integer quantity;
-
-
+    private String brand;
+     
+    @Embedded
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -58,7 +59,7 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private Set<OrderItem> productOrderItems; 
-   
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id")
     private Seller seller;
@@ -111,22 +112,21 @@ public class Product {
         this.price = price;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setProductName(final String productName) {
-        this.productName = productName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStocks() {
+        return stocks;
     }
 
-    public void setQuantity(final Integer quantity) {
-        this.quantity = quantity;
+    public void setStocks(Integer stocks) {
+        this.stocks = stocks;
     }
-
 
     public Category getCategory() {
         return category;
@@ -172,8 +172,16 @@ public class Product {
         return lastUpdated;
     }
 
-    public void setLastUpdated(final OffsetDateTime lastUpdated) {
+    public void setLastUpdated(OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+    
 }
