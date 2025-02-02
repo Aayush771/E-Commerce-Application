@@ -1,7 +1,6 @@
 package e_commerce.e_commerce.Service;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +67,15 @@ public  class ProductService implements IProductService {
         // TODO Auto-generated method stub
      return productRepository. findBySeller_SellerId(sellerId);
     }
-    
+    @Override
+    public String updateProductStocks(Long id, Long productId, int quantity) {
+        // TODO Auto-generated method stub
+        Product product = productRepository.findById(id).orElseThrow(()-> new RuntimeException("Product not found"));
+        if(product.getSeller().getSellerId() != id){
+            throw new RuntimeException("Seller not found for product: " + productId);
+        }
+        product.setStocks(product.getStocks() + quantity);
+        productRepository.save(product);
+        return "Product stock updated successfully";
+    }
 }

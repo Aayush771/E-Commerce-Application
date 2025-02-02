@@ -11,4 +11,5 @@ public interface IProductService {
     Product getProduct(final Long productId);  
     List<Product> getAllProducts();
     List<Product> getProductsBySellerId(final Long sellerId);
+    String updateProductStocks(final Long id,final Long productId,final int quantity);
 }

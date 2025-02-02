@@ -6,11 +6,11 @@ import e_commerce.e_commerce.Entity.Address;
 import e_commerce.e_commerce.Entity.User;
 
 public interface IUserService {
-    String addUser(final User user);
-    String updateUser(final User user);
-    String deleteUser(final Long userId);  
-    User getUser(final Long userId);
-    User getUser(final String email);
+    String addUser(User user);
+    String updateUser(User user);
+    String deleteUser(Long userId);  
+    User getUser(Long userId);
+    User getUser(String email);
     List<User> getAllUsers();
-    List<Address> getUserAddress(final Long userId);
+    List<Address> getUserAddress(Long userId);
 }

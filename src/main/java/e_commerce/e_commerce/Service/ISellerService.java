@@ -10,4 +10,5 @@ public interface ISellerService {
     String deleteSeller(final Long sellerId);
     Seller getSeller(final Long sellerId);
     List<Seller> getAllSellers();
+   
 }

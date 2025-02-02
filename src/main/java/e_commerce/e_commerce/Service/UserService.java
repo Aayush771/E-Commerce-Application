@@ -24,7 +24,7 @@ public class UserService implements IUserService {
    public String addUser(User user) {
     // Check if user already exists by email
     if(userRepository.existsByEmail(user.getEmail())) {
-        return "User already exists";
+        return "User already exists with email: "+ user.getEmail();
     }
 
     // Fetch the default ROLE from the database using RoleName enum
@@ -109,16 +109,5 @@ public class UserService implements IUserService {
         return new ArrayList<Address>(userRepository.findById(userId).get().getUserAddresses());
     }
 
-    // @Override
-    // public List<User> getAllUsers() {
-    //     // TODO Auto-generated method stub
-    //   return userRepository.findAll();
-    // }
-
-    // @Override
-    // public List<Address> getUserAddress(Long userId) {
-    //     // TODO Auto-generated method stub
-    //     return new ArrayList<Address>(userRepository.findById(userId).get().getUserAddresses());
-    // }
     
 }
