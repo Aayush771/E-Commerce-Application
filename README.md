@@ -1,4 +1,4 @@
-# E-Commerce Project
+# QuickCart 
 
 ## Overview
 This project is a database schema for an E-Commerce platform that includes users, products, orders, payments, and other essential entities required for online shopping. The schema is designed to handle user accounts, shopping carts, product categories, sellers, and order processing.
