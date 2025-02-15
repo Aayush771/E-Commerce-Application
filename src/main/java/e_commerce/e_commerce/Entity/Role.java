@@ -32,7 +32,7 @@ public class Role {
     private RoleName roleName;
 
     @ManyToMany(mappedBy = "userRoleRoles")
-    private Set<User> userRoleUsers;
+    private Set<Users> userRoleUsers;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -58,11 +58,11 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Set<User> getUserRoleUsers() {
+    public Set<Users> getUserRoleUsers() {
         return userRoleUsers;
     }
 
-    public void setUserRoleUsers(final Set<User> userRoleUsers) {
+    public void setUserRoleUsers(final Set<Users> userRoleUsers) {
         this.userRoleUsers = userRoleUsers;
     }
 

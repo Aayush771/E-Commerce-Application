@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import e_commerce.e_commerce.Entity.Cart;
 import e_commerce.e_commerce.Entity.CartItem;
-import e_commerce.e_commerce.Entity.User;
+import e_commerce.e_commerce.Entity.Users;
 import e_commerce.e_commerce.Repository.CartRepository;
 import e_commerce.e_commerce.Repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -30,7 +30,7 @@ public class CartService implements ICartService {
     @Override
     public Cart addCart(Long userId) {
         Cart cart = new Cart();
-        Optional<User> user = userRepository.findById(userId);
+        Optional<Users> user = userRepository.findById(userId);
         user.ifPresent(u -> {
             cart.setUser(u);
             u.getUserCarts().add(cart);

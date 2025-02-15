@@ -16,6 +16,8 @@ import jakarta.validation.constraints.Email;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
+
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "Users")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class Users {
 
     @Id
     @Column(nullable = false, updatable = false)

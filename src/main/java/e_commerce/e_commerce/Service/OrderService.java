@@ -10,7 +10,7 @@ import e_commerce.e_commerce.Entity.Cart;
 import e_commerce.e_commerce.Entity.Order;
 import e_commerce.e_commerce.Entity.OrderItem;
 import e_commerce.e_commerce.Entity.Product;
-import e_commerce.e_commerce.Entity.User;
+import e_commerce.e_commerce.Entity.Users;
 import e_commerce.e_commerce.Repository.OrderRepository;
 @Service
 public class OrderService implements IOrderService {
@@ -24,7 +24,7 @@ public class OrderService implements IOrderService {
       
         Cart cart = cartService.getCart(cartId).orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
                 
-        User user = cart.getUser();
+        Users user = cart.getUser();
         Order order = new Order();
        
     

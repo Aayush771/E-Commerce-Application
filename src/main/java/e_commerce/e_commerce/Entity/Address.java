@@ -44,7 +44,7 @@ public class Address {
     private String street;
 
     @ManyToMany(mappedBy = "userAddresses")
-    private Set<User> userAddressUsers;
+    private Set<Users> userAddressUsers;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -110,11 +110,11 @@ public class Address {
         this.street = street;
     }
 
-    public Set<User> getUserAddressUsers() {
+    public Set<Users> getUserAddressUsers() {
         return userAddressUsers;
     }
 
-    public void setUserAddressUsers(final Set<User> userAddressUsers) {
+    public void setUserAddressUsers(final Set<Users> userAddressUsers) {
         this.userAddressUsers = userAddressUsers;
     }
 

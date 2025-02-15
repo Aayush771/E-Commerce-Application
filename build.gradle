@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '3.4.1'
+    id 'org.springframework.boot' version '3.4.2'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
 }
@@ -13,6 +13,7 @@ bootRun {
     environment SPRING_PROFILES_ACTIVE: environment.SPRING_PROFILES_ACTIVE ?: 'local'
 }
 
+
 repositories {
     mavenCentral()
 }
@@ -20,6 +21,7 @@ repositories {
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-validation')
+    implementation ('org.springframework.boot:spring-boot-starter-security')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     runtimeOnly('com.mysql:mysql-connector-j')
     implementation('io.github.wimdeblauwe:error-handling-spring-boot-starter:4.5.0')
@@ -27,6 +29,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web-services')
     developmentOnly('org.springframework.boot:spring-boot-devtools')
    developmentOnly('org.springframework.boot:spring-boot-docker-compose')
+   testImplementation ('org.springframework.security:spring-security-test')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     // implementation 'org.springframework.boot:spring-boot-docker-compose:3.4.1'  // or latest version
 }

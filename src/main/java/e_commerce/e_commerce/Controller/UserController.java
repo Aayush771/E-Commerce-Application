@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import e_commerce.e_commerce.Entity.Address;
-import e_commerce.e_commerce.Entity.User;
+import e_commerce.e_commerce.Entity.Users;
 import e_commerce.e_commerce.Service.IUserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,11 +26,11 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("users")
-    public String addUser(@RequestBody User entity) {
+    public String addUser(@RequestBody Users entity) {
         return userService.addUser(entity);
     }
     @PutMapping("users/{id}")
-    public String updateUser(@RequestBody User entity) {
+    public String updateUser(@RequestBody Users entity) {
 
         return userService.updateUser(entity);
     }
@@ -41,7 +41,7 @@ public class UserController {
         return userService.deleteUser(id);
     }
 @GetMapping
-public User getUser(@RequestParam(required = false) String email, 
+public Users getUser(@RequestParam(required = false) String email, 
                     @RequestParam(required = false) Long id) {
     if (email != null) {
         return userService.getUser(email);
@@ -53,7 +53,7 @@ public User getUser(@RequestParam(required = false) String email,
 }
 
     @GetMapping("users")
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 

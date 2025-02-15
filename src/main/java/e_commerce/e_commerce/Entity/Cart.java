@@ -35,7 +35,7 @@ public class Cart {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
     @JsonIgnore
     @OneToMany(mappedBy = "cart",fetch = FetchType.EAGER)
     private Set<CartItem> cartCartItems;
@@ -64,11 +64,11 @@ public class Cart {
         this.totalPrice = totalPrice;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(final User user) {
+    public void setUser(final Users user) {
         this.user = user;
     }
 

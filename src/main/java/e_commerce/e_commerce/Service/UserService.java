@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import e_commerce.e_commerce.Entity.Address;
 import e_commerce.e_commerce.Entity.Role;
 import e_commerce.e_commerce.Entity.RoleName;
-import e_commerce.e_commerce.Entity.User;
+import e_commerce.e_commerce.Entity.Users;
 import e_commerce.e_commerce.Repository.RoleRepository;
 import e_commerce.e_commerce.Repository.UserRepository;
 @Service
@@ -20,24 +21,26 @@ public class UserService implements IUserService {
    private UserRepository userRepository;
    @Autowired
    private RoleRepository roleRepository;
+   @Autowired
+   private PasswordEncoder pEncoder;
     @Override
-   public String addUser(User user) {
+   public String addUser(Users user) {
     // Check if user already exists by email
     if(userRepository.existsByEmail(user.getEmail())) {
         return "User already exists with email: "+ user.getEmail();
     }
 
-    // Fetch the default ROLE from the database using RoleName enum
-    Role defaultRole = roleRepository.findByRoleName(RoleName.USER); // Using the enum value
+    
+    Role defaultRole = roleRepository.findByRoleName(RoleName.ROLE_USER); // Using the enum value
     if (defaultRole == null) {
         return "Default role 'USER' does not exist!";
     }
 
-    // Set the default role (USER) for the new user
+   
     Set<Role> roles = new HashSet<>();
     roles.add(defaultRole);
-
-    user.setUserRoleRoles(roles); // Assign default role to user
+    user.setPassword(pEncoder.encode(user.getPassword()));
+    user.setUserRoleRoles(roles); 
     user.setUserCarts(new HashSet<>());
 
     // Save the user
@@ -48,9 +51,9 @@ public class UserService implements IUserService {
 
     
     @Override
-    public String updateUser(User user) {
+    public String updateUser(Users user) {
         // TODO Auto-generated method stub
-        User user2 = userRepository.findById(user.getUserId()).orElseThrow(()-> new RuntimeException("User not found"));
+        Users user2 = userRepository.findById(user.getUserId()).orElseThrow(()-> new RuntimeException("User not found"));
 
        if(user.getFirstName() != null) {
            user2.setFirstName(user.getFirstName()); 
@@ -85,20 +88,20 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUser(Long userId) {
+    public Users getUser(Long userId) {
         // TODO Auto-generated method stub
       return userRepository.findById(userId).get();
       
     }
 
     @Override
-    public User getUser(String email) {
+    public Users getUser(String email) {
         // TODO Auto-generated method stub
-       return userRepository.findByEmail(email);
+       return userRepository.findByEmail(email).get();
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         // TODO Auto-generated method stub
       return userRepository.findAll();
     }
