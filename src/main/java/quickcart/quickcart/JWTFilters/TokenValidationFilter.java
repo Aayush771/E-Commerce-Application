@@ -21,7 +21,6 @@ import quickcart.quickcart.Exception.InvalidTokenException;
 import quickcart.quickcart.Exception.TokenMissingException;
 import quickcart.quickcart.Service.JWTService;
 import quickcart.quickcart.Service.UserDetail;
-
 @Component
 public class TokenValidationFilter extends OncePerRequestFilter {
     @Autowired
@@ -37,31 +36,34 @@ public class TokenValidationFilter extends OncePerRequestFilter {
 
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
-            throw new TokenMissingException(
-                    "JWT token is missing in the request header Or The token is not a Bearer token");
-            // filterChain.doFilter(request, response);
-            // return;
+            // throw new TokenMissingException("JWT token is missing");
+            filterChain.doFilter(request, response);
+            return;
         }
-
-        String token = header.substring(7);
-        String username = jwtService.extractUsername(token);
-
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetails.loadUserByUsername(username);
-            try {
-                // Validate the JWT token
-                if (jwtService.validateToken(token, username)) {
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
+        try {
+            String token = header.substring(7);
+            String username = jwtService.extractUsername(token);
+            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetails.loadUserByUsername(username);
+    
+                if(jwtService.validateToken(token, username)) {
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
-            } catch (ExpiredJwtException eje) {
+            } 
+        } catch (ExpiredJwtException eje) {
                 throw new ExpiredTokenException("JWT token has expired");
             } catch (MalformedJwtException me) {
                 throw new InvalidTokenException("JWT token is malformed");
+            } catch (Exception e) {
+                throw new InvalidTokenException(e.getMessage());
             }
-        }
+      
+
+        
         filterChain.doFilter(request, response);
     }
 
-}
+  }
+
+            
