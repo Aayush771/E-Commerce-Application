@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import quickcart.quickcart.Entity.Address;
 import quickcart.quickcart.Entity.Role;
 import quickcart.quickcart.Entity.RoleName;
+import quickcart.quickcart.Entity.UserDTO;
 import quickcart.quickcart.Entity.Users;
 import quickcart.quickcart.Exception.UserException;
 import quickcart.quickcart.Repository.RoleRepository;
@@ -26,6 +30,11 @@ public class UserService implements IUserService {
    private RoleRepository roleRepository;
    @Autowired
   private PasswordEncoder pEncoder;
+  @Autowired
+  AuthenticationManager authManger;
+
+  @Autowired
+  private JWTService jwtService;
     @Override
    public String addUser(Users user) {
     
@@ -93,7 +102,7 @@ public class UserService implements IUserService {
     @Override
     public Users getUser(Long userId) {
         // TODO Auto-generated method stub
-      return userRepository.findById(userId).get();
+      return userRepository.findById(userId).orElseThrow(()-> new UserException("User not found with email: " + userId));
       
     }
 
@@ -122,6 +131,18 @@ public class UserService implements IUserService {
         Users user = getUser(email);
         user.getUserRoleRoles().add(roleRepository.findByRoleName(RoleName.ROLE_ADMIN).get());
         return userRepository.save(user);
+    }
+
+
+    @Override
+    public String verifyUser(UserDTO user) {
+        // TODO Auto-generated method stub
+       Authentication auth =
+       authManger.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+       if(auth.isAuthenticated()) {
+          return jwtService.generateToken(user.getEmail());
+       }
+       return "Login failed";
     }
 
     

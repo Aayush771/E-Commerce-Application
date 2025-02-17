@@ -3,9 +3,12 @@ package quickcart.quickcart.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import quickcart.quickcart.Entity.Address;
+import quickcart.quickcart.Entity.UserDTO;
 import quickcart.quickcart.Entity.Users;
 import quickcart.quickcart.Service.IUserService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,8 +49,8 @@ public class UserController {
     }
 
     
-    @GetMapping("users/email")
-    public Users getUserByEmail(@RequestParam String email) {
+    @GetMapping("users/emails/{email}")
+    public Users getUserByEmail(@PathVariable String email) {
         return userService.getUser(email);
     }
     @GetMapping("users")
@@ -65,7 +68,15 @@ public class UserController {
         return userService.makeUserAdmin(email);
     }
     @PostMapping("users/login")
-    public String login(@RequestParam String email,@RequestParam String password) {
-        return "Success";
+    public ResponseEntity<?> login(@RequestBody UserDTO user) {
+       // System.out.println(user);
+        String token = userService.verifyUser(user);
+
+        if(token.equals("Login failed")) {
+            return ResponseEntity.status(401).body(token);
+        }
+        return ResponseEntity.ok()
+        .header(HttpHeaders.AUTHORIZATION, token) // Set JWT in Authorization header
+        .build();
     }
 }

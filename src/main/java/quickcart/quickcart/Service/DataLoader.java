@@ -88,7 +88,7 @@ public class DataLoader implements CommandLineRunner {
 
 
             if (existingProductTitles.contains(productDTO.title)) {
-                System.out.println("Skipping duplicate product: " + productDTO.title);
+               // System.out.println("Skipping duplicate product: " + productDTO.title);
                 continue;
             }
             // Check if Category exists, else create

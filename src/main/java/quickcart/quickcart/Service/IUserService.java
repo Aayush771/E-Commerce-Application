@@ -3,6 +3,7 @@ package quickcart.quickcart.Service;
 import java.util.List;
 
 import quickcart.quickcart.Entity.Address;
+import quickcart.quickcart.Entity.UserDTO;
 import quickcart.quickcart.Entity.Users;
 public interface IUserService {
     String addUser(Users user);
@@ -13,4 +14,5 @@ public interface IUserService {
     Users makeUserAdmin(String email);
     List<Users> getAllUsers();
     List<Address> getUserAddress(Long userId);
+    String verifyUser(UserDTO user);
 }
