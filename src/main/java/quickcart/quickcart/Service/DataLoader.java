@@ -49,17 +49,22 @@ public class DataLoader implements CommandLineRunner {
 
         
         for (RoleName roleName : RoleName.values()) {
-            if (roleRepository.findByRoleName(roleName) == null) {
+            System.out.println("Inserting role: " + roleName);
+
+            Optional<Role> optRole = roleRepository.findByRoleName(roleName);
+
+            if (optRole.isEmpty()) {
                 Role role = new Role();
                 role.setRoleName(roleName);
                 roleRepository.save(role);
             }
+           // System.out.println(optRole.get());
         }
         int existingProductCount = (int) productRepository.count();
 
         // Check if the database already has 100 products
         if (existingProductCount >= 500) {
-            System.out.println("Database already has " + existingProductCount + " products. Skipping insert.");
+           // System.out.println("Database already has " + existingProductCount + " products. Skipping insert.");
             return;
         }
         String apiUrl = "https://dummyjson.com/products?limit=500";

@@ -64,4 +64,8 @@ public class UserController {
     public Users makeUserAdmin(@PathVariable String email) {
         return userService.makeUserAdmin(email);
     }
+    @PostMapping("users/login")
+    public String login(@RequestParam String email,@RequestParam String password) {
+        return "Success";
+    }
 }

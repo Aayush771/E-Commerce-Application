@@ -11,6 +11,7 @@ import quickcart.quickcart.Entity.Order;
 import quickcart.quickcart.Entity.OrderItem;
 import quickcart.quickcart.Entity.Product;
 import quickcart.quickcart.Entity.Users;
+import quickcart.quickcart.Exception.OrderException;
 import quickcart.quickcart.Repository.OrderRepository;
 @Service
 public class OrderService implements IOrderService {
@@ -22,7 +23,7 @@ public class OrderService implements IOrderService {
     @Override
     public Order createOrder(Long cartId) {
       
-        Cart cart = cartService.getCart(cartId).orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+        Cart cart = cartService.getCart(cartId).orElseThrow(() -> new OrderException("Cart not found for id: " + cartId));
                 
         Users user = cart.getUser();
         Order order = new Order();
@@ -38,7 +39,7 @@ public class OrderService implements IOrderService {
             orderItem.setQuantity(cartItem.getQuantity());
             Product product = cartItem.getProduct();
             if (product.getSeller() == null) {
-                throw new RuntimeException("Seller not found for product: " + product.getProductId());
+                throw new OrderException("Seller not found for product: " + product.getProductId());
             }
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setSeller(cartItem.getProduct().getSeller());

@@ -7,6 +7,7 @@ import quickcart.quickcart.Entity.Order;
 import quickcart.quickcart.Entity.Payment;
 import quickcart.quickcart.Entity.PaymentMethod;
 import quickcart.quickcart.Entity.PaymentStatus;
+import quickcart.quickcart.Exception.PaymentException;
 import quickcart.quickcart.Entity.OrderStatus;
 import quickcart.quickcart.Repository.OrderRepository;
 import quickcart.quickcart.Repository.PaymentRepository;
@@ -22,7 +23,7 @@ public class PaymentService implements IPaymentService{
 
     public Payment processPayment(Long orderId, String paymentMethod) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new PaymentException("Order not found"));
 
         
         Payment payment = new Payment();

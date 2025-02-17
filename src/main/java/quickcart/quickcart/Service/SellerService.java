@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import quickcart.quickcart.Entity.Seller;
+import quickcart.quickcart.Exception.SellerException;
 import quickcart.quickcart.Repository.SellerRepository;
 @Service
 public class SellerService implements ISellerService {
@@ -28,7 +29,7 @@ public class SellerService implements ISellerService {
     @Override
     public String updateSeller(Seller seller) {
         // TODO Auto-generated method stub
-     Seller updatedSeller =   sellerRepository.findById(seller.getSellerId()).orElseThrow(()-> new RuntimeException("Seller not found"));
+     Seller updatedSeller =   sellerRepository.findById(seller.getSellerId()).orElseThrow(()-> new SellerException("Seller not found"));
      if(seller.getContactEmail() != null){
          updatedSeller.setContactEmail(seller.getContactEmail());
      }
@@ -50,7 +51,7 @@ public class SellerService implements ISellerService {
 
     @Override
     public String deleteSeller(Long sellerId) {
-      Seller seller = sellerRepository.findById(sellerId).orElseThrow(()-> new RuntimeException("Seller not found"));
+      Seller seller = sellerRepository.findById(sellerId).orElseThrow(()-> new SellerException("Seller not found"));
       sellerRepository.delete(seller);
       return "Seller deleted successfully";
     }

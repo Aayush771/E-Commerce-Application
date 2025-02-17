@@ -13,6 +13,7 @@ import quickcart.quickcart.Entity.Address;
 import quickcart.quickcart.Entity.Role;
 import quickcart.quickcart.Entity.RoleName;
 import quickcart.quickcart.Entity.Users;
+import quickcart.quickcart.Exception.UserException;
 import quickcart.quickcart.Repository.RoleRepository;
 import quickcart.quickcart.Repository.UserRepository;
 
@@ -33,7 +34,7 @@ public class UserService implements IUserService {
     }
 
     
-    Role defaultRole = roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(()-> new RuntimeException("Default role 'USER' does not exist!")); 
+    Role defaultRole = roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(()-> new UserException("Default role 'USER' does not exist!")); 
     if (defaultRole == null) {
         return "Default role 'USER' does not exist!";
     }
@@ -55,7 +56,7 @@ public class UserService implements IUserService {
     @Override
     public String updateUser(Users user) {
         // TODO Auto-generated method stub
-        Users user2 = userRepository.findById(user.getUserId()).orElseThrow(()-> new RuntimeException("User not found"));
+        Users user2 = userRepository.findById(user.getUserId()).orElseThrow(()-> new UserException("User not found"));
 
        if(user.getFirstName() != null) {
            user2.setFirstName(user.getFirstName()); 
@@ -99,7 +100,7 @@ public class UserService implements IUserService {
     @Override
     public Users getUser(String email) {
         // TODO Auto-generated method stub
-       return userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("User not found with email: " + email));
+       return userRepository.findByEmail(email).orElseThrow(()-> new UserException("User not found with email: " + email));
     }
 
     @Override

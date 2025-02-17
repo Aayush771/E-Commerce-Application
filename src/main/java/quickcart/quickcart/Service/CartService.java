@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import quickcart.quickcart.Entity.Cart;
 import quickcart.quickcart.Entity.CartItem;
 import quickcart.quickcart.Entity.Users;
+import quickcart.quickcart.Exception.CartException;
 import quickcart.quickcart.Repository.CartRepository;
 import quickcart.quickcart.Repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -18,7 +19,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class CartService implements ICartService {
 
-    @Autowired(required = false)
+    @Autowired
     private CartRepository cartRepository;
 
     @Autowired
@@ -47,7 +48,7 @@ public class CartService implements ICartService {
     public Cart addItemToCart(Long cartId, Long productId, int quantity) {
         Optional<Cart> cartOptional = cartRepository.findById(cartId);
         
-        Cart cart = cartOptional.orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+        Cart cart = cartOptional.orElseThrow(() -> new CartException("Cart not found for id: " + cartId));
        CartItem newCartItem =  cartItemService.addCartItem(cart, productId, quantity);
        Set<CartItem> cartItems = cart.getCartCartItems();
        cartItems.add(newCartItem);
@@ -73,7 +74,7 @@ public class CartService implements ICartService {
     @Override
     public Cart removeItemFromCart(Long cartId, Long cartItemId) {
         Optional<Cart> cartOptional = cartRepository.findById(cartId);      
-        Cart cart = cartOptional.orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+        Cart cart = cartOptional.orElseThrow(() -> new CartException("Cart not found for id: " + cartId));
         Set<CartItem> cartItems = cart.getCartCartItems();
         cartItems.removeIf(cartItem -> cartItem.getCartItemId().equals(cartItemId));
         cart.setCartCartItems(cartItems);
@@ -86,7 +87,7 @@ public class CartService implements ICartService {
     @Override
     public Cart updateCartItemQuantity(Long cartId, Long cartItemId, int quantity) {
         Optional<Cart> cartOptional = cartRepository.findById(cartId);      
-        Cart cart = cartOptional.orElseThrow(() -> new RuntimeException("Cart not found for id: " + cartId));
+        Cart cart = cartOptional.orElseThrow(() -> new CartException("Cart not found for id: " + cartId));
       CartItem cartItem = cartItemService.updateCartItemQuantity(cartItemId, quantity);
       Set<CartItem> cartItems = cart.getCartCartItems();
       cartItems.removeIf(item -> item.getCartItemId().equals(cartItemId));

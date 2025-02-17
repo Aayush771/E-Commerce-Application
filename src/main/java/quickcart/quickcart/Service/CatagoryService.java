@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import quickcart.quickcart.Entity.Category;
+import quickcart.quickcart.Exception.ProductException;
 import quickcart.quickcart.Repository.CategoryRepository;
 @Service
 public class CatagoryService implements ICatagoryService{
@@ -22,7 +23,7 @@ public class CatagoryService implements ICatagoryService{
 
     @Override
     public String updateCatagory(Category category) {
-       Category catagory = catagoryRepository.findById(category.getCategoryId()).orElseThrow(()-> new RuntimeException("Catagory not found"));
+       Category catagory = catagoryRepository.findById(category.getCategoryId()).orElseThrow(()-> new ProductException("Catagory not found"));
        if(category.getCategoryName() != null) {
            catagory.setCategoryName(category.getCategoryName());
            catagoryRepository.save(catagory);
@@ -34,7 +35,7 @@ public class CatagoryService implements ICatagoryService{
     @Override
     public String deleteCatagory(Long categoryId) {
         // TODO Auto-generated method stub
-        catagoryRepository.findById(categoryId).orElseThrow(()-> new RuntimeException("Catagory not found"));
+        catagoryRepository.findById(categoryId).orElseThrow(()-> new ProductException("Catagory not found"));
         catagoryRepository.deleteById(categoryId);
         return "Catagory deleted successfully"; 
     }

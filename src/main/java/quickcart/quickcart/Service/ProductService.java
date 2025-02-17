@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import quickcart.quickcart.Entity.Product;
+import quickcart.quickcart.Exception.ProductException;
 import quickcart.quickcart.Repository.ProductRepository;
 @Service
 public  class ProductService implements IProductService {
@@ -20,7 +21,7 @@ public  class ProductService implements IProductService {
 
     @Override
     public String updateProduct(Product product) {
-       Product product2 = productRepository.findById(product.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
+       Product product2 = productRepository.findById(product.getProductId()).orElseThrow(() -> new ProductException("Product not found"));
        if(product.getTitle() != null) {   
            product2.setTitle(product.getTitle());
     }
@@ -46,7 +47,7 @@ public  class ProductService implements IProductService {
 
     @Override
     public String deleteProduct(Long productId) {
-      Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+      Product product = productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
       productRepository.delete(product);
       return "Product deleted successfully";
     }
@@ -54,7 +55,7 @@ public  class ProductService implements IProductService {
     @Override
     public Product getProduct(Long productId) {
         // TODO Auto-generated method stub
-        return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        return productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
     }
 
     @Override
@@ -70,9 +71,9 @@ public  class ProductService implements IProductService {
     @Override
     public String updateProductStocks(Long id, Long productId, int quantity) {
         // TODO Auto-generated method stub
-        Product product = productRepository.findById(id).orElseThrow(()-> new RuntimeException("Product not found"));
+        Product product = productRepository.findById(id).orElseThrow(()-> new ProductException("Product not found"));
         if(product.getSeller().getSellerId() != id){
-            throw new RuntimeException("Seller not found for product: " + productId);
+            throw new ProductException("Seller not found for product: " + productId);
         }
         product.setStocks(product.getStocks() + quantity);
         productRepository.save(product);

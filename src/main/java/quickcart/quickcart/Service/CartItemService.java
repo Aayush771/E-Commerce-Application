@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import quickcart.quickcart.Entity.Cart;
 import quickcart.quickcart.Entity.CartItem;
 import quickcart.quickcart.Entity.Product;
+import quickcart.quickcart.Exception.CartException;
 import quickcart.quickcart.Repository.CartItemRepository;
 import quickcart.quickcart.Repository.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -25,10 +26,10 @@ public class CartItemService implements ICartItemService {
     @Override
     public CartItem addCartItem(Cart cart, Long productId, int quantity) {
         Product product = productRepository.findById(productId)
-                          .orElseThrow(() -> new RuntimeException("Product not found"));
+                          .orElseThrow(() -> new CartException("Product not found"));
 
         if (product.getStocks() < quantity) {
-            throw new RuntimeException("Not enough stock available");
+            throw new CartException("Not enough stock available");
         }
 
         CartItem cartItem = new CartItem();
@@ -52,7 +53,7 @@ public class CartItemService implements ICartItemService {
     @Override
     public CartItem updateCartItemQuantity(Long cartItemId, int quantity) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
-                            .orElseThrow(() -> new RuntimeException("Cart Item not found"));
+                            .orElseThrow(() -> new CartException("Cart Item not found"));
         cartItem.setQuantity(quantity);
         cartItem.setItemTotalPrice(cartItem.getProductPrice() * quantity);
        return cartItemRepository.save(cartItem);
